@@ -32,7 +32,7 @@ public class Main {
         ElementAttributes interiaArticle = new ElementAttributes("div", "itemprop", "articleBody");
         ElementAttributes interiaTitle = new ElementAttributes("title", "", "");
 
-        int maxLinks = 500;
+        int maxLinks = 1000;
 
         int fileCounter = 0;
         while (queue.hasNext()) {

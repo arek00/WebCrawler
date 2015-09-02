@@ -8,11 +8,14 @@ import java.util.*;
 public class SimpleLinksQueue implements IQueue {
 
     private List<String> linksQueue = new LinkedList<String>();
+    private VisitedLinkRegister visitedLinks = new VisitedLinkRegister();
 
     public void add(String link) {
         ObjectValidator.nullPointerValidate(link);
 
-        linksQueue.add(link);
+        if (!visitedLinks.isVisited(link)) {
+            linksQueue.add(link);
+        }
     }
 
     public void add(Collection<? extends String> links) {

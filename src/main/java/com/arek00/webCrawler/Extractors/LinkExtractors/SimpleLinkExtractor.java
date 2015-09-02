@@ -30,7 +30,7 @@ public class SimpleLinkExtractor implements LinkExtractor {
      *
      * @param htmlCode
      * @param domain
-     * @return
+     * @return - List of extracted links saved as Strings
      */
     public List<String> extractLinks(String htmlCode, String domain) {
         List<String> extractedLinks = new ArrayList<String>();
@@ -41,7 +41,8 @@ public class SimpleLinkExtractor implements LinkExtractor {
 
         for (Element link : links) {
             String extractedLink = link.attr("abs:href");
-            if (extractedLink.contains(domain)) {
+
+            if (DomainValidator.isInsideDomain(extractedLink, domain)) {
                 extractedLinks.add(link.attr("abs:href"));
             }
         }
