@@ -1,4 +1,4 @@
-package com.arek00.webCrawler.Extractros;
+package com.arek00.webCrawler.Extractors.LinkExtractors;
 
 
 import org.jsoup.Jsoup;
