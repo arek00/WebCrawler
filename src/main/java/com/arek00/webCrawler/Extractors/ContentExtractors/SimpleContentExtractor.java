@@ -38,6 +38,12 @@ public class SimpleContentExtractor implements IContentExtractor {
         this.attributes = attributes;
     }
 
+    public void setPage(String htmlCode) {
+        ObjectValidator.nullPointerValidate(htmlCode);
+
+        this.page = Jsoup.parse(htmlCode);
+    }
+
     public String extractContent() {
         String pattern = doGetPattern(attributes);
         String content = doGetContent(pattern);

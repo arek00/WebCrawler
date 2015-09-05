@@ -13,13 +13,12 @@ public class VisitedLinkRegister {
 
     private boolean doIsVisited(String link) {
         for (String currentLink : visitedLinks) {
-            currentLink.equals(link);
-            return true;
+            if (currentLink.equals(link)) {
+                return true;
+            }
         }
 
         visitedLinks.add(link);
         return false;
     }
-
-
 }
