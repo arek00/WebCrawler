@@ -1,24 +1,34 @@
 package com.arek00.webCrawler.Extractors.ContentExtractors;
 
 import com.arek00.webCrawler.Validators.ObjectValidator;
+import org.simpleframework.xml.Element;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Value object for ContentExtractor
  */
+
 public class ElementAttributes {
-    private String element;
-    private String attribute;
-    private String attributeValue;
+    @Element private String element;
+    @Element private String attribute;
+    @Element private String attributeValue;
 
     public ElementAttributes(String element, String attribute, String attributeValue) {
         ObjectValidator.nullPointerValidate(element, attribute, attributeValue);
-
 
         this.element = element;
         this.attribute = attribute;
         this.attributeValue = attributeValue;
     }
 
+    /**
+     * Mandatory framework implementation
+     */
+
+    public ElementAttributes() {
+    }
 
     public String getElement() {
         return element;

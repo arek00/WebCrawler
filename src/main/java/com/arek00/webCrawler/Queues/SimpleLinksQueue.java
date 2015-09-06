@@ -8,8 +8,18 @@ import java.util.*;
 public class SimpleLinksQueue implements IQueue {
 
     private List<String> linksQueue = new LinkedList<String>();
-    private VisitedLinkRegister visitedLinks = new VisitedLinkRegister();
+    private VisitedLinkRegister visitedLinks = null;
     private int visitedLinksNumber = 0;
+
+    /**
+     *
+     * @param register Register that stores links visited in the past
+     */
+    public SimpleLinksQueue(VisitedLinkRegister register) {
+        ObjectValidator.nullPointerValidate(register);
+
+        this.visitedLinks = register;
+    }
 
     public void add(String link) {
         ObjectValidator.nullPointerValidate(link);

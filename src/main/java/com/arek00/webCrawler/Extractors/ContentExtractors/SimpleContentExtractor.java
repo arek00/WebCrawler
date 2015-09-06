@@ -6,6 +6,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  * Simple extractor that extract text from given tag element of page.
@@ -26,32 +29,33 @@ import org.jsoup.select.Elements;
  * For element = "div", attribute = "class" and attributeValue = "content"
  * The result of extractContent will be "Some text".
  */
+
 public class SimpleContentExtractor implements IContentExtractor {
 
     private Document page;
-    private ElementAttributes attributes;
+    @org.simpleframework.xml.Element private ElementAttributes attributes;
 
-    public SimpleContentExtractor(String htmlCode, ElementAttributes attributes) {
-        ObjectValidator.nullPointerValidate(htmlCode, attributes);
 
-        this.page = Jsoup.parse(htmlCode);
+    public SimpleContentExtractor(ElementAttributes attributes) {
+        ObjectValidator.nullPointerValidate(attributes);
+
         this.attributes = attributes;
     }
 
-    public void setPage(String htmlCode) {
+    public String extractContent(String htmlCode) {
         ObjectValidator.nullPointerValidate(htmlCode);
 
         this.page = Jsoup.parse(htmlCode);
-    }
-
-    public String extractContent() {
         String pattern = doGetPattern(attributes);
         String content = doGetContent(pattern);
 
         return content;
     }
 
-    public boolean containsContent() {
+    public boolean containsContent(String htmlCode) {
+        ObjectValidator.nullPointerValidate(htmlCode);
+
+        this.page = Jsoup.parse(htmlCode);
         return !page.select(doGetPattern(attributes)).isEmpty();
     }
 
@@ -77,5 +81,20 @@ public class SimpleContentExtractor implements IContentExtractor {
         }
 
         return content;
+    }
+
+    /**
+     * Framework mandatory implementation
+     */
+
+    public SimpleContentExtractor() {
+    }
+
+    public ElementAttributes getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(ElementAttributes attributes) {
+        this.attributes = attributes;
     }
 }

@@ -23,7 +23,7 @@ public class SimpleLinksQueueTest {
 
     @BeforeClass
     public static void initQueue() {
-        queue = new SimpleLinksQueue();
+        queue = new SimpleLinksQueue(new VisitedLinkRegister());
 
         for (String link : links) {
             queue.add(link);
