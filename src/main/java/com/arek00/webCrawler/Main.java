@@ -3,7 +3,6 @@ package com.arek00.webCrawler;
 
 import com.arek00.webCrawler.Downloaders.IDownloader;
 import com.arek00.webCrawler.Downloaders.SimpleDownloader;
-import com.arek00.webCrawler.Entities.Article;
 import com.arek00.webCrawler.Entities.IArticle;
 import com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor;
 import com.arek00.webCrawler.Extractors.ContentExtractors.ElementAttributes;
@@ -16,13 +15,7 @@ import com.arek00.webCrawler.Queues.SimpleLinksQueue;
 import com.arek00.webCrawler.Queues.VisitedLinkRegister;
 import com.arek00.webCrawler.Serializers.ISerializer;
 import com.arek00.webCrawler.Serializers.XMLSerializer;
-import com.arek00.webCrawler.Writers.ArticleFileWriter;
-import com.arek00.webCrawler.Writers.ArticleXMLWriter;
-import com.arek00.webCrawler.Writers.IWriter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -36,20 +29,19 @@ public class Main {
 
     public static void main(String[] args) {
         IDownloader downloader = new SimpleDownloader();
-        VisitedLinkRegister register = new VisitedLinkRegister();
+        VisitedLinkRegister register = new VisitedLinkRegister(DOMAIN);
 
-        IQueue queue = new SimpleLinksQueue(register);
+        IQueue queue = new SimpleLinksQueue(register, DOMAIN);
         queue.add(STARTING_URL);
         LinkExtractor linkExtractor = new SimpleLinkExtractor();
         String htmlCode = null;
         ISerializer serializer = new XMLSerializer();
 
-
         ElementAttributes interiaArticle = new ElementAttributes("div", "itemprop", "articleBody");
         ElementAttributes interiaTitle = new ElementAttributes("title", "", "");
         IContentExtractor articleExtractor = new SimpleContentExtractor(interiaArticle);
         IContentExtractor titleExtractor = new SimpleContentExtractor(interiaTitle);
-        ArticleExtractor extractor = new ArticleExtractor(articleExtractor, titleExtractor);
+        ArticleExtractor extractor = new ArticleExtractor(DOMAIN, articleExtractor, titleExtractor);
 
         int maxLinks = 5;
 
@@ -110,6 +102,7 @@ public class Main {
         try {
             serializer.serialize(register, new File(PATH + "\\visitedLinks.xml"));
             serializer.serialize(extractor, new File(PATH + "\\extractors.xml"));
+            serializer.serialize(queue, new File(PATH + "\\queue.xml"));
         } catch (Exception e) {
             e.printStackTrace();
 

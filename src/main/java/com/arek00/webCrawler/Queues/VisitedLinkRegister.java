@@ -1,23 +1,27 @@
 package com.arek00.webCrawler.Queues;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.arek00.webCrawler.Validators.ObjectValidator;
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement(name = "VisitedLinks")
+@Root(name = "VisitedLinks")
 public class VisitedLinkRegister {
 
+    @ElementList(name = "link")
     private List<String> visitedLinks = new ArrayList<String>();
+    @Attribute(name = "domain")
+    private String domain;
 
-    @XmlElement(name = "link")
-    public List<String> getVisitedLinks() {
-        return visitedLinks;
+    public VisitedLinkRegister(String domain) {
+        ObjectValidator.nullPointerValidate(domain);
+
+        this.domain = domain;
     }
 
-    public void setVisitedLinks(List<String> visitedLinks) {
-        this.visitedLinks = visitedLinks;
-    }
 
     public boolean isVisited(String link) {
         return doIsVisited(link);
@@ -32,5 +36,29 @@ public class VisitedLinkRegister {
 
         visitedLinks.add(link);
         return false;
+    }
+
+    /**
+     * Framework mandatory implementation
+
+     */
+
+    public VisitedLinkRegister() {
+    }
+
+    public List<String> getVisitedLinks() {
+        return visitedLinks;
+    }
+
+    public void setVisitedLinks(List<String> visitedLinks) {
+        this.visitedLinks = visitedLinks;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }
