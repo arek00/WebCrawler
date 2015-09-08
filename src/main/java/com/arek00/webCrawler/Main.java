@@ -54,13 +54,12 @@ public class Main {
             System.out.println("Visited link " + link);
 
             try {
-                htmlCode = downloader.downloadURL(link);
+                List<String> links = linkExtractor.extractLinks(link, DOMAIN);
+                queue.add(links);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            List<String> links = linkExtractor.extractLinks(htmlCode, DOMAIN);
-            queue.add(links);
 
 
             try {

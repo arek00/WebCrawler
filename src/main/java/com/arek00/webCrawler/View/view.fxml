@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arek00.webCrawler.View.ViewController" fx:id="mainPane">
+   <children>
+      <Button fx:id="startDownloadingButton" layoutX="462.0" layoutY="354.0" mnemonicParsing="false" onAction="#onStartDownloading" text="Start Downloading" />
+      <TextField fx:id="pageDomainField" layoutX="132.0" layoutY="18.0" prefHeight="25.0" prefWidth="187.0" />
+      <TextField fx:id="articlesDirectoryPathField" layoutX="30.0" layoutY="82.0" prefHeight="25.0" prefWidth="294.0" />
+      <Label layoutX="30.0" layoutY="22.0" text="Page Domain" />
+      <Label layoutX="27.0" layoutY="59.0" text="Directory to store articles" />
+      <Label layoutX="102.0" layoutY="151.0" text="Serialization files">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="183.0" text="Articles Extractor File" />
+      <TextField fx:id="articlesExtractorFilePathField" layoutX="151.0" layoutY="179.0" prefHeight="25.0" prefWidth="171.0" />
+      <Label layoutX="30.0" layoutY="217.0" text="Queue File" />
+      <Label layoutX="30.0" layoutY="252.0" text="Visited Links History File" />
+      <TextField fx:id="queueFilePathField" layoutX="151.0" layoutY="213.0" prefHeight="25.0" prefWidth="171.0" />
+      <TextField fx:id="visitedLinksPathField" layoutX="177.0" layoutY="248.0" prefHeight="25.0" prefWidth="146.0" />
+      <TextField fx:id="articlesNumberPathField" layoutX="176.0" layoutY="119.0" />
+      <Label layoutX="30.0" layoutY="123.0" text="Articles Number" />
+      <Button fx:id="articlesDirectoryButton" layoutX="339.0" layoutY="82.0" mnemonicParsing="false" onAction="#onChooseArticlesDirectory" text="Choose Directory" />
+      <Button fx:id="extractorFileButton" layoutX="339.0" layoutY="179.0" mnemonicParsing="false" onAction="#onChooseExtractorFile" text="Choose File" />
+      <Button fx:id="queueFileButton" layoutX="339.0" layoutY="213.0" mnemonicParsing="false" onAction="#onChooseQueueHistoryFile" text="Choose File" />
+      <Button fx:id="visitedLinksFileButton" layoutX="339.0" layoutY="248.0" mnemonicParsing="false" onAction="#onChooseVisitedLinksFile" text="Choose File" />
+   </children>
+</Pane>

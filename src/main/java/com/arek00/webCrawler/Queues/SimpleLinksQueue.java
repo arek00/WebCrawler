@@ -56,6 +56,11 @@ public class SimpleLinksQueue implements IQueue {
         return linksQueue.remove(0);
     }
 
+    public void setRegister(VisitedLinkRegister register) {
+        ObjectValidator.nullPointerValidate(register);
+        this.visitedLinks = register;
+    }
+
     public int size() {
         return linksQueue.size();
     }

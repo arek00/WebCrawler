@@ -12,4 +12,8 @@ public interface IQueue extends Iterator<String> {
     public boolean hasNext();
 
     public String next();
+
+    public int size();
+
+    public void setRegister(VisitedLinkRegister register);
 }
