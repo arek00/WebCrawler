@@ -32,6 +32,7 @@ public class WindowModeMain extends Application {
         primaryStage.setScene(scene);
 
         ViewController viewController = loader.getController();
+        viewController.setUserWindow(primaryStage);
 
         Model model = new Model();
         Presenter presenter = new Presenter(model, viewController);

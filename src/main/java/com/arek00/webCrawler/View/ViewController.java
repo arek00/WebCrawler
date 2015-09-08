@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
+
+import java.io.File;
 
 
 /**
@@ -30,7 +33,7 @@ public class ViewController implements IView {
     private EventHandler<ActionEvent> onStartDownloadingHandler;
     private FileChooser fileChooser;
     private DirectoryChooser directoryChooser;
-
+    private Window userWindow;
 
     public String getDomain() {
         return pageDomainField.getText();
@@ -73,15 +76,29 @@ public class ViewController implements IView {
 
 
     public void onChooseArticlesDirectory(ActionEvent actionEvent) {
+        File directory = directoryChooser.showDialog(userWindow);
+        articlesDirectoryPathField.setText(directory.getAbsolutePath());
     }
 
     public void onChooseExtractorFile(ActionEvent actionEvent) {
+        File directory = fileChooser.showOpenDialog(userWindow);
+        articlesExtractorFilePathField.setText(directory.getAbsolutePath());
     }
 
     public void onChooseQueueHistoryFile(ActionEvent actionEvent) {
+        File directory = fileChooser.showOpenDialog(userWindow);
+        queueFilePathField.setText(directory.getAbsolutePath());
     }
 
     public void onChooseVisitedLinksFile(ActionEvent actionEvent) {
+        File directory = fileChooser.showOpenDialog(userWindow);
+        visitedLinksPathField.setText(directory.getAbsolutePath());
+    }
 
+    public void setUserWindow(Window window) {
+        this.userWindow = window;
+
+        this.fileChooser = new FileChooser();
+        this.directoryChooser = new DirectoryChooser();
     }
 }

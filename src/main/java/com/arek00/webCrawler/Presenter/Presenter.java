@@ -34,6 +34,8 @@ public class Presenter {
                 model.createArticlesExtractor(view.getSerializedArticlesExtractorPath());
                 model.restoreQueue(view.getSerializedQueuePath());
                 model.restoreVisitedLinks(view.getSerializedVisitedLinksPath());
+                model.setArticlesDownloadPath(view.getArticlesDirectory());
+                model.setArticlesNumber(Integer.parseInt(view.getArticlesNumber()));
                 model.startDownloadingArticles();
             } catch (Exception exception) {
                 exception.printStackTrace();

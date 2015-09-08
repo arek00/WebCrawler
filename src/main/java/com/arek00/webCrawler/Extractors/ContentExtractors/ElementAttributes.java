@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class ElementAttributes {
     @Element private String element;
-    @Element private String attribute;
-    @Element private String attributeValue;
+    @Element(required = false) private String attribute;
+    @Element(required = false) private String attributeValue;
 
     public ElementAttributes(String element, String attribute, String attributeValue) {
         ObjectValidator.nullPointerValidate(element, attribute, attributeValue);
@@ -39,6 +39,10 @@ public class ElementAttributes {
     }
 
     public String getAttribute() {
+        if (attribute == null) {
+            attribute = "";
+        }
+
         return attribute;
     }
 
@@ -52,6 +56,10 @@ public class ElementAttributes {
     }
 
     public String getAttributeValue() {
+        if (attributeValue == null) {
+            attributeValue = "";
+        }
+
         return attributeValue;
     }
 

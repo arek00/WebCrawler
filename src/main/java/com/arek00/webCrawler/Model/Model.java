@@ -5,7 +5,9 @@ import com.arek00.webCrawler.Downloaders.SimpleDownloader;
 import com.arek00.webCrawler.Entities.IArticle;
 import com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor;
 import com.arek00.webCrawler.Extractors.LinkExtractors.LinkExtractor;
+import com.arek00.webCrawler.Extractors.LinkExtractors.SimpleLinkExtractor;
 import com.arek00.webCrawler.Queues.IQueue;
+import com.arek00.webCrawler.Queues.SimpleLinksQueue;
 import com.arek00.webCrawler.Queues.VisitedLinkRegister;
 import com.arek00.webCrawler.Serializers.ISerializer;
 import com.arek00.webCrawler.Serializers.XMLSerializer;
@@ -43,6 +45,7 @@ public class Model {
     public Model() {
         downloader = new SimpleDownloader();
         serializer = new XMLSerializer();
+        linkExtractor = new SimpleLinkExtractor();
     }
 
 
@@ -52,17 +55,23 @@ public class Model {
         this.domain = domain;
     }
 
+    public void setArticlesDownloadPath(String path) {
+        ObjectValidator.nullPointerValidate(path);
+
+        this.articlesDirectory = path;
+    }
+
     public void restoreQueue(String serializedFilePath) throws Exception {
         ObjectValidator.nullPointerValidate(serializedFilePath);
 
         File file = new File(serializedFilePath);
-        queue = serializer.deserialize(IQueue.class, file);
+        queue = serializer.deserialize(SimpleLinksQueue.class, file);
     }
 
     public void restoreVisitedLinks(String visitedLinksPath) throws Exception {
         ObjectValidator.nullPointerValidate(visitedLinksPath);
 
-        this.register = serializer.deserialize(register.getClass(), new File(visitedLinksPath));
+        this.register = serializer.deserialize(VisitedLinkRegister.class, new File(visitedLinksPath));
         queue.setRegister(register);
     }
 
@@ -74,13 +83,22 @@ public class Model {
         this.articlesExtractor = serializer.deserialize(ArticleExtractor.class, file);
     }
 
+    public void setArticlesNumber(int articlesNumber) {
+        this.articlesNumber = articlesNumber;
+    }
+
     public void startDownloadingArticles() throws Exception {
         this.downloadedArticles = 0;
         this.visitedLinks = 0;
         this.linksInQueue = queue.size();
 
-        while (downloadedArticles < articlesNumber || queue.hasNext()) {
+
+        while ((articlesNumber < 0 || downloadedArticles < articlesNumber) &&
+                queue.hasNext()) {
             String currentDownloadedPageUrl = queue.next();
+
+            System.out.println("Visited link: " + currentDownloadedPageUrl);
+
             List<String> extractedLinks = linkExtractor.extractLinks(currentDownloadedPageUrl, this.domain);
 
             if (articlesExtractor.isArticle(currentDownloadedPageUrl)) {
@@ -91,7 +109,6 @@ public class Model {
                 serializer.serialize(article, fileToSave);
                 ++downloadedArticles;
             }
-
         }
 
     }
