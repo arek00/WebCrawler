@@ -1,16 +1,20 @@
 package com.arek00.webCrawler.View;
 
+import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,11 +33,16 @@ public class ViewController implements IView {
     public Button visitedLinksFileButton;
     public Button articlesDirectoryButton;
     public Pane mainPane;
+    public Label visitedLinksNumberLabel;
+    public Label downloadedLinksNumberLabel;
+    public Label linksInQueueNumberLabel;
 
     private EventHandler<ActionEvent> onStartDownloadingHandler;
     private FileChooser fileChooser;
     private DirectoryChooser directoryChooser;
     private Window userWindow;
+
+    private List<IListener> onStartDownloadingListeners = new ArrayList<IListener>();
 
     public String getDomain() {
         return pageDomainField.getText();
@@ -60,18 +69,21 @@ public class ViewController implements IView {
     }
 
     public void showError(String errorMessage) {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 
-    public void setOnStartDownloadingListener(EventHandler<ActionEvent> listener) {
+    public void setOnStartDownloadingListener(IListener listener) {
         ObjectValidator.nullPointerValidate(listener);
-
-        this.onStartDownloadingHandler = listener;
-        startDownloadingButton.setOnAction(listener);
+        this.onStartDownloadingListeners.add(listener);
     }
 
     public void onStartDownloading(ActionEvent actionEvent) {
-        onStartDownloadingHandler.handle(actionEvent);
+        for (IListener listener : onStartDownloadingListeners) {
+            listener.inform();
+        }
     }
 
 
@@ -100,5 +112,17 @@ public class ViewController implements IView {
 
         this.fileChooser = new FileChooser();
         this.directoryChooser = new DirectoryChooser();
+    }
+
+    public void bindVisitedLinksNumber(StringProperty property) {
+        visitedLinksNumberLabel.textProperty().bind(property);
+    }
+
+    public void bindDownloadedLinksNumber(StringProperty property) {
+        downloadedLinksNumberLabel.textProperty().bind(property);
+    }
+
+    public void bindLinksInQueueNumber(StringProperty property) {
+        linksInQueueNumberLabel.textProperty().bind(property);
     }
 }
