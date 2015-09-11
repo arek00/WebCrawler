@@ -53,5 +53,6 @@
       <Label id="downloadedLinksNumberLabel" fx:id="downloadedLinksNumberLabel" layoutX="223.0" layoutY="358.0" text="0" />
       <Label id="linksInQueueLabel" layoutX="244.0" layoutY="358.0" text="Links in queue:" />
       <Label id="linksInQueueNumberLabel" fx:id="linksInQueueNumberLabel" layoutX="332.0" layoutY="358.0" text="0" />
+      <ChoiceBox fx:id="domainChoiceBox" layoutX="341.0" layoutY="18.0" prefWidth="150.0" />
    </children>
 </Pane>

@@ -2,8 +2,9 @@ package com.arek00.webCrawler.Model;
 
 import com.arek00.webCrawler.Downloaders.IDownloader;
 import com.arek00.webCrawler.Downloaders.SimpleDownloader;
-import com.arek00.webCrawler.Entities.IArticle;
+import com.arek00.webCrawler.Entities.Articles.IArticle;
 import com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor;
+import com.arek00.webCrawler.Extractors.ArticleExtractors.IArticleExtractor;
 import com.arek00.webCrawler.Extractors.LinkExtractors.LinkExtractor;
 import com.arek00.webCrawler.Extractors.LinkExtractors.SimpleLinkExtractor;
 import com.arek00.webCrawler.Observers.IListener;
@@ -35,7 +36,7 @@ public class Model {
     private VisitedLinkRegister register;
 
 
-    private ArticleExtractor articlesExtractor;
+    private IArticleExtractor articlesExtractor;
     private LinkExtractor linkExtractor;
 
     private ISerializer serializer;

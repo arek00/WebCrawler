@@ -1,6 +1,5 @@
 package com.arek00.webCrawler.View;
 
-import com.arek00.webCrawler.Validators.ObjectValidator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +25,7 @@ public class ViewInitializer extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         this.primaryStage = primaryStage;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/view.fxml"));
         Parent view = loader.load();
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);

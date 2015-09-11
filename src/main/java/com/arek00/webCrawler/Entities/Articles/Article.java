@@ -1,11 +1,9 @@
-package com.arek00.webCrawler.Entities;
+package com.arek00.webCrawler.Entities.Articles;
 
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 
 /**

@@ -1,7 +1,7 @@
 package com.arek00.webCrawler.Writers;
 
 
-import com.arek00.webCrawler.Entities.IArticle;
+import com.arek00.webCrawler.Entities.Articles.IArticle;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 
 import java.io.FileWriter;

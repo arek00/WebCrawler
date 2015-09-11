@@ -3,8 +3,8 @@ package com.arek00.webCrawler.Extractors.ArticleExtractors;
 
 import com.arek00.webCrawler.Downloaders.IDownloader;
 import com.arek00.webCrawler.Downloaders.SimpleDownloader;
-import com.arek00.webCrawler.Entities.Article;
-import com.arek00.webCrawler.Entities.IArticle;
+import com.arek00.webCrawler.Entities.Articles.Article;
+import com.arek00.webCrawler.Entities.Articles.IArticle;
 import com.arek00.webCrawler.Extractors.ContentExtractors.IContentExtractor;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import org.simpleframework.xml.Attribute;
@@ -13,20 +13,16 @@ import org.simpleframework.xml.Root;
 
 import java.io.IOException;
 
-@Root
-public class ArticleExtractor {
+public class ArticleExtractor implements IArticleExtractor {
 
     private IDownloader downloader;
     @Element private IContentExtractor contentExtractor;
     @Element private IContentExtractor titleExtractor;
-    @Attribute private String domain;
 
-    public ArticleExtractor(String domain, IContentExtractor contentExtractor, IContentExtractor titleExtractor) {
+    public ArticleExtractor(IContentExtractor contentExtractor, IContentExtractor titleExtractor) {
         ObjectValidator.nullPointerValidate(contentExtractor, titleExtractor);
 
         downloader = new SimpleDownloader();
-        this.domain = domain;
-
         this.contentExtractor = contentExtractor;
         this.titleExtractor = titleExtractor;
     }
@@ -50,7 +46,7 @@ public class ArticleExtractor {
     }
 
     /**
-     * Framework mandatory implementation
+     * Constructor to serialization purposes
      */
 
     public ArticleExtractor() {
@@ -72,14 +68,6 @@ public class ArticleExtractor {
 
     public void setContentExtractor(IContentExtractor contentExtractor) {
         this.contentExtractor = contentExtractor;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
     }
 
 }

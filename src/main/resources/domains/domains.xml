@@ -1,0 +1,5 @@
+<domainsList>
+   <domainsList class="java.util.ArrayList">
+      <domainLoaderInfo domainFilePath="/domains/extractors/interia.xml" domainName="interia.pl"/>
+   </domainsList>
+</domainsList>

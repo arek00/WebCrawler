@@ -1,4 +1,4 @@
-package com.arek00.webCrawler.Entities;
+package com.arek00.webCrawler.Entities.Articles;
 
 
 public interface IArticle {

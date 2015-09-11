@@ -3,6 +3,7 @@ package com.arek00.webCrawler.View;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -36,6 +37,7 @@ public class ViewController implements IView {
     public Label visitedLinksNumberLabel;
     public Label downloadedLinksNumberLabel;
     public Label linksInQueueNumberLabel;
+    public ChoiceBox domainChoiceBox;
 
     private EventHandler<ActionEvent> onStartDownloadingHandler;
     private FileChooser fileChooser;
@@ -46,6 +48,7 @@ public class ViewController implements IView {
 
     public String getDomain() {
         return pageDomainField.getText();
+
     }
 
     public String getSerializedQueuePath() {

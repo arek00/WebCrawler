@@ -1,9 +1,8 @@
 package com.arek00.webCrawler.Writers;
 
-import com.arek00.webCrawler.Entities.IArticle;
+import com.arek00.webCrawler.Entities.Articles.IArticle;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 
-import javax.naming.OperationNotSupportedException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
