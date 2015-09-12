@@ -1,9 +1,8 @@
-package com.arek00.webCrawler.Extractors.ExtractorsLoader;
+package com.arek00.webCrawler.Loaders.ExtractorsLoader;
 
 
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 
 public class DomainLoaderInfo {
     @Attribute private String domainFilePath;

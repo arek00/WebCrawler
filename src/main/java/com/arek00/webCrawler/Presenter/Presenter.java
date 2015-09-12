@@ -31,6 +31,7 @@ public class Presenter {
 
         view.setOnStartDownloadingListener(new OnStartDownloading());
         model.setStatisticValuesListener(new OnStatisticValuesChanged());
+        view.setDomainsList(model.getDomains());
     }
 
 
@@ -38,7 +39,6 @@ public class Presenter {
         public void inform() {
             try {
                 model.setDomain(view.getDomain());
-                model.createArticlesExtractor(view.getSerializedArticlesExtractorPath());
                 model.restoreQueue(view.getSerializedQueuePath());
                 model.restoreVisitedLinks(view.getSerializedVisitedLinksPath());
                 model.setArticlesDownloadPath(view.getArticlesDirectory());

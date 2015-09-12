@@ -11,7 +11,6 @@
          <tooltip>
             <Tooltip id="startDownloadingToolTip" text="Start download with selected parameters" />
          </tooltip></Button>
-      <TextField fx:id="pageDomainField" layoutX="132.0" layoutY="18.0" prefHeight="25.0" prefWidth="187.0" />
       <TextField fx:id="articlesDirectoryPathField" layoutX="30.0" layoutY="82.0" prefHeight="25.0" prefWidth="294.0" />
       <Label layoutX="30.0" layoutY="22.0" text="Page Domain" />
       <Label layoutX="27.0" layoutY="59.0" text="Directory to store articles" />
@@ -20,12 +19,10 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="183.0" text="Articles Extractor File" />
-      <TextField fx:id="articlesExtractorFilePathField" layoutX="151.0" layoutY="179.0" prefHeight="25.0" prefWidth="171.0" />
-      <Label layoutX="30.0" layoutY="217.0" text="Queue File" />
-      <Label layoutX="30.0" layoutY="252.0" text="Visited Links History File" />
-      <TextField fx:id="queueFilePathField" layoutX="151.0" layoutY="213.0" prefHeight="25.0" prefWidth="171.0" promptText="Leave empty if starting from zero" />
-      <TextField fx:id="visitedLinksPathField" layoutX="177.0" layoutY="248.0" prefHeight="25.0" prefWidth="146.0" promptText="Leave empty if starting from zero" />
+      <Label layoutX="30.0" layoutY="182.0" text="Queue File" />
+      <Label layoutX="30.0" layoutY="217.0" text="Visited Links History File" />
+      <TextField fx:id="queueFilePathField" layoutX="151.0" layoutY="178.0" prefHeight="25.0" prefWidth="171.0" promptText="Leave empty if starting from zero" />
+      <TextField fx:id="visitedLinksPathField" layoutX="177.0" layoutY="213.0" prefHeight="25.0" prefWidth="146.0" promptText="Leave empty if starting from zero" />
       <TextField fx:id="articlesNumberPathField" layoutX="176.0" layoutY="119.0" promptText="0 or less to infinite downloading">
          <tooltip>
             <Tooltip id="articlesNumberToolTip" text="Select number of articles. Type 0 or less if only limitation should be a lenght of queue" />
@@ -35,15 +32,11 @@
          <tooltip>
             <Tooltip id="articlesDirectoryToolTip" text="Set directory where articles will be save" />
          </tooltip></Button>
-      <Button fx:id="extractorFileButton" layoutX="339.0" layoutY="179.0" mnemonicParsing="false" onAction="#onChooseExtractorFile" text="Choose File">
-         <tooltip>
-            <Tooltip id="articlesExtractorToolTip" text="Choose file contains extractor of articles content" />
-         </tooltip></Button>
-      <Button fx:id="queueFileButton" layoutX="339.0" layoutY="213.0" mnemonicParsing="false" onAction="#onChooseQueueHistoryFile" text="Choose File">
+      <Button fx:id="queueFileButton" layoutX="339.0" layoutY="178.0" mnemonicParsing="false" onAction="#onChooseQueueHistoryFile" text="Choose File">
          <tooltip>
             <Tooltip id="queueToolTip" text="Choose file contains queue of downloading files" />
          </tooltip></Button>
-      <Button fx:id="visitedLinksFileButton" layoutX="339.0" layoutY="248.0" mnemonicParsing="false" onAction="#onChooseVisitedLinksFile" text="Choose File">
+      <Button fx:id="visitedLinksFileButton" layoutX="339.0" layoutY="213.0" mnemonicParsing="false" onAction="#onChooseVisitedLinksFile" text="Choose File">
          <tooltip>
             <Tooltip id="visitedLinksTooltip" text="Choose file contains history of visited links" />
          </tooltip></Button>
@@ -53,6 +46,6 @@
       <Label id="downloadedLinksNumberLabel" fx:id="downloadedLinksNumberLabel" layoutX="223.0" layoutY="358.0" text="0" />
       <Label id="linksInQueueLabel" layoutX="244.0" layoutY="358.0" text="Links in queue:" />
       <Label id="linksInQueueNumberLabel" fx:id="linksInQueueNumberLabel" layoutX="332.0" layoutY="358.0" text="0" />
-      <ChoiceBox fx:id="domainChoiceBox" layoutX="341.0" layoutY="18.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="domainChoiceBox" layoutX="108.0" layoutY="18.0" prefHeight="25.0" prefWidth="214.0" />
    </children>
 </Pane>

@@ -1,4 +1,4 @@
-package com.arek00.webCrawler.Extractors.ExtractorsLoader;
+package com.arek00.webCrawler.Loaders.ExtractorsLoader;
 
 
 import org.simpleframework.xml.ElementList;

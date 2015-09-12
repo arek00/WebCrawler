@@ -3,8 +3,11 @@ package com.arek00.webCrawler.Model;
 import com.arek00.webCrawler.Downloaders.IDownloader;
 import com.arek00.webCrawler.Downloaders.SimpleDownloader;
 import com.arek00.webCrawler.Entities.Articles.IArticle;
+import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor;
 import com.arek00.webCrawler.Extractors.ArticleExtractors.IArticleExtractor;
+import com.arek00.webCrawler.Loaders.ExtractorsLoader.DomainLoaderInfo;
+import com.arek00.webCrawler.Loaders.ExtractorsLoader.DomainsList;
 import com.arek00.webCrawler.Extractors.LinkExtractors.LinkExtractor;
 import com.arek00.webCrawler.Extractors.LinkExtractors.SimpleLinkExtractor;
 import com.arek00.webCrawler.Observers.IListener;
@@ -18,12 +21,17 @@ import com.arek00.webCrawler.Validators.StringValidator;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  */
 public class Model {
+
+    private String DOMAINS_RESOURCE;
+
     private int downloadedArticles = 0;
     private int visitedLinks = 0;
     private int linksInQueue = 0;
@@ -31,17 +39,15 @@ public class Model {
     private IDownloader downloader;
 
     private String articlesDirectory;
-    private String domain;
     private IQueue queue;
     private VisitedLinkRegister register;
 
-
-    private IArticleExtractor articlesExtractor;
+    private List<Domain> domainsList;
+    private Domain domain;
     private LinkExtractor linkExtractor;
 
     private ISerializer serializer;
     private int articlesNumber;
-
 
     private String queueFilePath;
     private String articlesExtractorPath;
@@ -52,14 +58,53 @@ public class Model {
         downloader = new SimpleDownloader();
         serializer = new XMLSerializer();
         linkExtractor = new SimpleLinkExtractor();
+
+        setDomainsFilePath();
+        try {
+            this.domainsList = loadDomains(loadDomainsList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to load Domains Serialization File: " + DOMAINS_RESOURCE + " " + e.getMessage());
+        }
+    }
+
+    private void setDomainsFilePath() {
+        this.DOMAINS_RESOURCE = getClass().getResource("/domains/domains.xml").getFile();
+        System.out.println(DOMAINS_RESOURCE);
+    }
+
+    private DomainsList loadDomainsList() throws Exception {
+        File domainsSerializationFile = new File(DOMAINS_RESOURCE);
+        return this.serializer.deserialize(DomainsList.class, domainsSerializationFile);
+    }
+
+    private List<Domain> loadDomains(DomainsList domainsList) throws Exception {
+        List<DomainLoaderInfo> domains = domainsList.getDomainsList();
+        List<Domain> deserializedDomains = new ArrayList<Domain>();
+
+        for (DomainLoaderInfo domainInfo : domains) {
+
+            String path = getClass().getResource(domainInfo.getDomainFilePath()).getFile();
+
+            File domainFile = new File(path);
+            Domain domain = serializer.deserialize(Domain.class, domainFile);
+            deserializedDomains.add(domain);
+        }
+
+        System.out.println(String.format("Loaded %d domains", deserializedDomains.size()));
+
+        return deserializedDomains;
     }
 
 
-    public void setDomain(String domain) {
+    public void setDomain(Domain domain) {
         ObjectValidator.nullPointerValidate(domain);
-        StringValidator.isEmptyString(domain, "Domain name cannot be empty");
 
         this.domain = domain;
+    }
+
+    public List<Domain> getDomains() {
+        return this.domainsList;
     }
 
     public void setArticlesDownloadPath(String path) {
@@ -72,8 +117,10 @@ public class Model {
     public void restoreQueue(String serializedFilePath) throws Exception {
         ObjectValidator.nullPointerValidate(serializedFilePath);
 
+        String domainName = this.domain.toString();
+
         if (serializedFilePath.isEmpty()) {
-            queue = new SimpleLinksQueue(new VisitedLinkRegister(this.domain), domain);
+            queue = new SimpleLinksQueue(new VisitedLinkRegister(domainName), domainName);
         } else {
             File file = new File(serializedFilePath);
             if (!file.exists()) {
@@ -88,26 +135,12 @@ public class Model {
         ObjectValidator.nullPointerValidate(visitedLinksPath);
 
         if (visitedLinksPath.isEmpty()) {
-            this.register = new VisitedLinkRegister(this.domain);
+            this.register = new VisitedLinkRegister(domain.toString());
         } else {
             this.register = serializer.deserialize(VisitedLinkRegister.class, new File(visitedLinksPath));
         }
 
         queue.setRegister(register);
-    }
-
-
-    public void createArticlesExtractor(String serializationFilePath) throws Exception {
-        ObjectValidator.nullPointerValidate(serializationFilePath);
-        StringValidator.isEmptyString(serializationFilePath, "Please select articles extractor file");
-
-        File file = new File(serializationFilePath);
-
-        if (!file.exists()) {
-            throw new IllegalArgumentException("Selected file does not exist");
-        }
-
-        this.articlesExtractor = serializer.deserialize(ArticleExtractor.class, file);
     }
 
     public void setArticlesNumber(int articlesNumber) {
@@ -129,6 +162,8 @@ public class Model {
     }
 
     private void downloadIfArticle(String pageUrl) throws Exception {
+        IArticleExtractor articlesExtractor = this.domain.getArticleExtractor();
+
         if (articlesExtractor.isArticle(pageUrl)) {
             System.out.println("Downloading: " + pageUrl);
 
@@ -142,7 +177,7 @@ public class Model {
     }
 
     private List<String> extractLinks(String pageUrl) throws IOException {
-        return linkExtractor.extractLinks(pageUrl, this.domain);
+        return linkExtractor.extractLinks(pageUrl, domain.toString());
     }
 
     public int getDownloadedArticles() {

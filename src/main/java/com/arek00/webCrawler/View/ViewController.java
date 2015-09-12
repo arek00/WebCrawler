@@ -1,8 +1,11 @@
 package com.arek00.webCrawler.View;
 
+import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
@@ -46,9 +48,8 @@ public class ViewController implements IView {
 
     private List<IListener> onStartDownloadingListeners = new ArrayList<IListener>();
 
-    public String getDomain() {
-        return pageDomainField.getText();
-
+    public Domain getDomain() {
+        return (Domain) domainChoiceBox.getValue();
     }
 
     public String getSerializedQueuePath() {
@@ -127,5 +128,10 @@ public class ViewController implements IView {
 
     public void bindLinksInQueueNumber(StringProperty property) {
         linksInQueueNumberLabel.textProperty().bind(property);
+    }
+
+    public void setDomainsList(List<Domain> domains) {
+        ObservableList<Domain> choiceBoxElements = FXCollections.observableList(domains);
+        domainChoiceBox.setItems(choiceBoxElements);
     }
 }

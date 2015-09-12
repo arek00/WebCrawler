@@ -1,16 +1,21 @@
 package com.arek00.webCrawler.View;
 
 
+import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Observers.IListener;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import java.util.List;
+
 /**
  */
 public interface IView {
 
-    public String getDomain();
+    public Domain getDomain();
+
+    public void setDomainsList(List<Domain> domains);
 
     public String getSerializedQueuePath();
 

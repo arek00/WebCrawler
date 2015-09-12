@@ -65,4 +65,9 @@ public class Domain implements IDomain {
         this.extractor = extractor;
     }
 
+    @Override
+    public String toString() {
+        return domainName;
+    }
+
 }

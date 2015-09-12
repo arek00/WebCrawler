@@ -1,9 +1,6 @@
 package com.arek00.webCrawler;
 
 
-import com.arek00.webCrawler.Downloaders.IDownloader;
-import com.arek00.webCrawler.Downloaders.SimpleDownloader;
-import com.arek00.webCrawler.Entities.Articles.IArticle;
 import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Entities.Domains.IDomain;
 import com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor;
@@ -11,18 +8,12 @@ import com.arek00.webCrawler.Extractors.ArticleExtractors.IArticleExtractor;
 import com.arek00.webCrawler.Extractors.ContentExtractors.ElementAttributes;
 import com.arek00.webCrawler.Extractors.ContentExtractors.IContentExtractor;
 import com.arek00.webCrawler.Extractors.ContentExtractors.SimpleContentExtractor;
-import com.arek00.webCrawler.Extractors.ExtractorsLoader.DomainLoaderInfo;
-import com.arek00.webCrawler.Extractors.ExtractorsLoader.DomainsList;
-import com.arek00.webCrawler.Extractors.LinkExtractors.LinkExtractor;
-import com.arek00.webCrawler.Extractors.LinkExtractors.SimpleLinkExtractor;
-import com.arek00.webCrawler.Queues.IQueue;
-import com.arek00.webCrawler.Queues.SimpleLinksQueue;
-import com.arek00.webCrawler.Queues.VisitedLinkRegister;
+import com.arek00.webCrawler.Loaders.ExtractorsLoader.DomainLoaderInfo;
+import com.arek00.webCrawler.Loaders.ExtractorsLoader.DomainsList;
 import com.arek00.webCrawler.Serializers.ISerializer;
 import com.arek00.webCrawler.Serializers.XMLSerializer;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
