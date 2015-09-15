@@ -2,6 +2,7 @@ package com.arek00.webCrawler.View;
 
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
+import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -17,23 +18,29 @@ public interface IView {
 
     public void setDomainsList(List<Domain> domains);
 
-    public String getSerializedQueuePath();
+    public String getQueuePath();
 
-    public String getSerializedArticlesExtractorPath();
+    public String getDirectoryToDownloadPath();
 
-    public String getArticlesDirectory();
-
-    public String getSerializedVisitedLinksPath();
+    public String getVisitedLinksPath();
 
     public String getArticlesNumber();
 
     public void showError(String errorMessage);
 
+    public void showMessage(String messsage);
+
+    public void setDownloadStatistics(DownloadingStatistic statistics);
+
     public void setOnStartDownloadingListener(IListener listener);
 
-    public void bindVisitedLinksNumber(StringProperty property);
+    public void setOnStopDownloadingListener(IListener listener);
 
-    public void bindDownloadedLinksNumber(StringProperty property);
+    public void setOnPauseDownloadingListener(IListener listener);
 
-    public void bindLinksInQueueNumber(StringProperty property);
+    public IListener getOnStartDownloadingListener();
+
+    public IListener getOnStopDownloadingListener();
+
+    public IListener getOnPauseDownloadingListener();
 }

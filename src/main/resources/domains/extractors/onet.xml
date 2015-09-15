@@ -1,0 +1,18 @@
+<domain domainName="onet.pl" mainPage="http://www.onet.pl">
+   <extractor class="com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor">
+      <contentExtractor class="com.arek00.webCrawler.Extractors.ContentExtractors.SimpleContentExtractor">
+         <attributes>
+            <element>div</element>
+            <attribute>itemprop</attribute>
+            <attributeValue>articleBody</attributeValue>
+         </attributes>
+      </contentExtractor>
+      <titleExtractor class="com.arek00.webCrawler.Extractors.ContentExtractors.SimpleContentExtractor">
+         <attributes>
+            <element>title</element>
+            <attribute></attribute>
+            <attributeValue></attributeValue>
+         </attributes>
+      </titleExtractor>
+   </extractor>
+</domain>

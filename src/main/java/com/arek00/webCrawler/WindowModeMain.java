@@ -2,6 +2,8 @@ package com.arek00.webCrawler;
 
 import com.arek00.webCrawler.Model.Model;
 import com.arek00.webCrawler.Presenter.Presenter;
+import com.arek00.webCrawler.View.GraphicsJFXViewController;
+import com.arek00.webCrawler.View.IView;
 import com.arek00.webCrawler.View.ViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,15 +23,16 @@ public class WindowModeMain extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/view.fxml"));
-        Parent view = loader.load();
-        Scene scene = new Scene(view);
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
 
         ViewController viewController = loader.getController();
         viewController.setUserWindow(primaryStage);
 
+        IView view = new GraphicsJFXViewController(viewController);
         Model model = new Model();
-        Presenter presenter = new Presenter(model, viewController);
+        Presenter presenter = new Presenter(model, view);
 
         primaryStage.show();
     }

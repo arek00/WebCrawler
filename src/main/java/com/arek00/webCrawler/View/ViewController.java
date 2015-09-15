@@ -1,6 +1,7 @@
 package com.arek00.webCrawler.View;
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
+import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import javafx.beans.property.SimpleListProperty;
@@ -23,15 +24,12 @@ import java.util.List;
 /**
  * Controller of view.fxml
  */
-public class ViewController implements IView {
+public class ViewController {
     public Button startDownloadingButton;
-    public TextField pageDomainField;
     public TextField articlesDirectoryPathField;
-    public TextField articlesExtractorFilePathField;
     public TextField queueFilePathField;
     public TextField visitedLinksPathField;
     public TextField articlesNumberPathField;
-    public Button extractorFileButton;
     public Button queueFileButton;
     public Button visitedLinksFileButton;
     public Button articlesDirectoryButton;
@@ -40,36 +38,20 @@ public class ViewController implements IView {
     public Label downloadedLinksNumberLabel;
     public Label linksInQueueNumberLabel;
     public ChoiceBox domainChoiceBox;
+    public Pane downloadingPane;
+    public Pane settingsPane;
+    public Button pauseDownloadingButton;
+    public Button stopDownloadingButton;
+    public TextArea messagesTextArea;
 
     private EventHandler<ActionEvent> onStartDownloadingHandler;
     private FileChooser fileChooser;
     private DirectoryChooser directoryChooser;
     private Window userWindow;
-
-    private List<IListener> onStartDownloadingListeners = new ArrayList<IListener>();
+    private String messages = "";
 
     public Domain getDomain() {
         return (Domain) domainChoiceBox.getValue();
-    }
-
-    public String getSerializedQueuePath() {
-        return queueFilePathField.getText();
-    }
-
-    public String getSerializedArticlesExtractorPath() {
-        return articlesExtractorFilePathField.getText();
-    }
-
-    public String getArticlesDirectory() {
-        return articlesDirectoryPathField.getText();
-    }
-
-    public String getSerializedVisitedLinksPath() {
-        return visitedLinksPathField.getText();
-    }
-
-    public String getArticlesNumber() {
-        return articlesNumberPathField.getText();
     }
 
     public void showError(String errorMessage) {
@@ -79,26 +61,31 @@ public class ViewController implements IView {
         alert.showAndWait();
     }
 
-    public void setOnStartDownloadingListener(IListener listener) {
-        ObjectValidator.nullPointerValidate(listener);
-        this.onStartDownloadingListeners.add(listener);
-    }
-
-    public void onStartDownloading(ActionEvent actionEvent) {
-        for (IListener listener : onStartDownloadingListeners) {
-            listener.inform();
+    public void setMessage(String message) {
+        if (this.messages.isEmpty()) {
+            this.messages += message;
+        } else {
+            this.messages += '\n' + message;
         }
+
+        messagesTextArea.setText(this.messages);
     }
 
+    public void setOnStartDownloading(EventHandler<ActionEvent> action) {
+        startDownloadingButton.setOnAction(action);
+    }
+
+    public void setOnPauseDownloading(EventHandler<ActionEvent> action) {
+        pauseDownloadingButton.setOnAction(action);
+    }
+
+    public void setOnStopDownloadingListener(EventHandler<ActionEvent> action) {
+        stopDownloadingButton.setOnAction(action);
+    }
 
     public void onChooseArticlesDirectory(ActionEvent actionEvent) {
         File directory = directoryChooser.showDialog(userWindow);
         articlesDirectoryPathField.setText(directory.getAbsolutePath());
-    }
-
-    public void onChooseExtractorFile(ActionEvent actionEvent) {
-        File directory = fileChooser.showOpenDialog(userWindow);
-        articlesExtractorFilePathField.setText(directory.getAbsolutePath());
     }
 
     public void onChooseQueueHistoryFile(ActionEvent actionEvent) {
@@ -133,5 +120,23 @@ public class ViewController implements IView {
     public void setDomainsList(List<Domain> domains) {
         ObservableList<Domain> choiceBoxElements = FXCollections.observableList(domains);
         domainChoiceBox.setItems(choiceBoxElements);
+    }
+
+    public void onStopDownload() {
+        downloadingPane.setVisible(false);
+        settingsPane.setVisible(true);
+
+        startDownloadingButton.setDisable(false);
+    }
+
+    public void onStartDownload() {
+        downloadingPane.setVisible(true);
+        settingsPane.setVisible(false);
+        startDownloadingButton.setDisable(true);
+    }
+
+    public void onPauseDownload() {
+
+
     }
 }

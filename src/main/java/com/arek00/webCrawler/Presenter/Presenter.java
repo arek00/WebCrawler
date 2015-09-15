@@ -1,20 +1,12 @@
 package com.arek00.webCrawler.Presenter;
 
+import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Model.Model;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import com.arek00.webCrawler.View.IView;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observer;
 
 
 /**
@@ -30,20 +22,32 @@ public class Presenter {
         this.view = view;
 
         view.setOnStartDownloadingListener(new OnStartDownloading());
-        model.setStatisticValuesListener(new OnStatisticValuesChanged());
+        view.setOnStopDownloadingListener(new OnStopDownloading());
         view.setDomainsList(model.getDomains());
+
+        model.setMessageListener(new MessageListener());
+        model.setOnStartDownloadListener(view.getOnStartDownloadingListener());
+        model.setOnStopDownloadListener(view.getOnStopDownloadingListener());
+        model.setStatisticUpdateListener(new OnDownloadingStatisticChanged());
     }
 
+
+    class MessageListener implements IListener {
+
+        public void inform() {
+            view.showMessage(model.getMessage());
+        }
+    }
 
     class OnStartDownloading implements IListener {
         public void inform() {
             try {
                 model.setDomain(view.getDomain());
-                model.restoreQueue(view.getSerializedQueuePath());
-                model.restoreVisitedLinks(view.getSerializedVisitedLinksPath());
-                model.setArticlesDownloadPath(view.getArticlesDirectory());
+                model.loadQueueFile(view.getQueuePath());
+                model.loadVisitedLinks(view.getVisitedLinksPath());
+                model.setArticlesDownloadPath(view.getDirectoryToDownloadPath());
                 model.setArticlesNumber(Integer.parseInt(view.getArticlesNumber()));
-                model.startDownloadingArticles();
+                model.startDownloading();
             } catch (NumberFormatException exception) {
                 exception.printStackTrace();
                 String message = String.format("%s is incorrect articles number. Please set numeric value", view.getArticlesNumber());
@@ -58,35 +62,31 @@ public class Presenter {
         }
     }
 
-    class OnStatisticValuesChanged implements IListener {
+    class OnStopDownloading implements IListener {
+
+        public void inform() {
+            model.stopDownlaoding();
+        }
+    }
+
+    class OnDownloadingStatisticChanged implements IListener {
 
         SimpleStringProperty downloadedArticlesBind;
         SimpleStringProperty visitedLinksBind;
         SimpleStringProperty linksInQueueBind;
 
-        public OnStatisticValuesChanged() {
+        public OnDownloadingStatisticChanged() {
 
             downloadedArticlesBind = new SimpleStringProperty("0");
             visitedLinksBind = new SimpleStringProperty("0");
             linksInQueueBind = new SimpleStringProperty("0");
-
-            view.bindDownloadedLinksNumber(downloadedArticlesBind);
-            view.bindVisitedLinksNumber(visitedLinksBind);
-            view.bindLinksInQueueNumber(linksInQueueBind);
         }
 
         public void inform() {
 
             Platform.runLater(new Runnable() {
                 public void run() {
-
-                    String downloadedArticles = Integer.toString(model.getDownloadedArticles());
-                    String visitedLinks = Integer.toString(model.getVisitedLinks());
-                    String linksInQueue = Integer.toString(model.getLinksInQueue());
-
-                    downloadedArticlesBind.set(downloadedArticles);
-                    visitedLinksBind.set(visitedLinks);
-                    linksInQueueBind.set(linksInQueue);
+                    view.setDownloadStatistics(model.getDownloadingStatistics());
                 }
             });
         }
