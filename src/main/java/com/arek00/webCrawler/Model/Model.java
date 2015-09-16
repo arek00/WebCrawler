@@ -61,7 +61,6 @@ public class Model {
             this.domainsList = loadDomains(loadDomainsList());
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Failed to load Domains Serialization File: " + DOMAINS_RESOURCE + " " + e.getMessage());
         }
     }
 
@@ -81,8 +80,6 @@ public class Model {
             Domain domain = serializer.deserialize(Domain.class, file);
             deserializedDomains.add(domain);
         }
-
-        System.out.println(String.format("Loaded %d domains", deserializedDomains.size()));
 
         return deserializedDomains;
     }
@@ -172,7 +169,6 @@ public class Model {
         if (articlesExtractor.isArticle(pageUrl)) {
 
             message("Downloading: " + pageUrl);
-            System.out.println("Downloading: " + pageUrl);
 
             IArticle article = articlesExtractor.getArticle(pageUrl);
             String hashFileName = createArticleFileName(article);
@@ -260,7 +256,6 @@ public class Model {
                 queue.add(linkExtractor.extractLinks(domain.getDomainMainPage(), domain.getDomainName()));
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println(e.getMessage());
             }
 
             while (downloadingCondition(statistic.getDownloadedFiles(), queue.hasNext())) {
@@ -270,7 +265,6 @@ public class Model {
                 String message = "Visited link: " + currentDownloadedPageUrl;
 
                 message(message);
-                System.out.println(message);
 
                 try {
                     queue.add(extractLinks(currentDownloadedPageUrl));
