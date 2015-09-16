@@ -1,10 +1,7 @@
 package com.arek00.webCrawler.View;
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
-import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
-import com.arek00.webCrawler.Validators.ObjectValidator;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +14,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,12 +39,23 @@ public class ViewController {
     public Button pauseDownloadingButton;
     public Button stopDownloadingButton;
     public TextArea messagesTextArea;
+    public Pane serializationPane;
+    public TextField queueSavePathTextField;
+    public TextField visitedLinksSavePathField;
+    public Button queueSaveButton;
+    public Button visitedLinksSaveButton;
+    public Button saveDownloadStateButton;
+    public Button backToMenuButton;
+    public Button clearMessagesButton;
 
     private EventHandler<ActionEvent> onStartDownloadingHandler;
     private FileChooser fileChooser;
     private DirectoryChooser directoryChooser;
     private Window userWindow;
     private String messages = "";
+    private IListener serializeQueueListener;
+    private IListener visitedLinksSerializeListener;
+
 
     public Domain getDomain() {
         return (Domain) domainChoiceBox.getValue();
@@ -123,13 +130,14 @@ public class ViewController {
     }
 
     public void onStopDownload() {
-        downloadingPane.setVisible(false);
-        settingsPane.setVisible(true);
-
+        backToMenuButton.setDisable(false);
+        saveDownloadStateButton.setDisable(false);
         startDownloadingButton.setDisable(false);
     }
 
     public void onStartDownload() {
+        backToMenuButton.setDisable(true);
+        saveDownloadStateButton.setDisable(true);
         downloadingPane.setVisible(true);
         settingsPane.setVisible(false);
         startDownloadingButton.setDisable(true);
@@ -138,5 +146,48 @@ public class ViewController {
     public void onPauseDownload() {
 
 
+    }
+
+    public void onSaveQueueClick(ActionEvent actionEvent) {
+        File fileToSave = fileChooser.showSaveDialog(userWindow);
+
+        if (fileToSave != null) {
+            queueSavePathTextField.setText(fileToSave.getAbsolutePath());
+            serializeQueueListener.inform();
+        }
+    }
+
+    public void onSaveVisitedLinksClick(ActionEvent actionEvent) {
+        File fileToSave = fileChooser.showSaveDialog(userWindow);
+
+        if (fileToSave != null) {
+            visitedLinksSavePathField.setText(fileToSave.getAbsolutePath());
+            visitedLinksSerializeListener.inform();
+        }
+    }
+
+    public void onBackToMenuButtonClick(ActionEvent actionEvent) {
+        downloadingPane.setVisible(false);
+        serializationPane.setVisible(false);
+        settingsPane.setVisible(true);
+    }
+
+    public void setSerializeQueueListener(IListener serializeQueueListener) {
+        this.serializeQueueListener = serializeQueueListener;
+    }
+
+    public void setVisitedLinksSerializeListener(IListener visitedLinksSerializeListener) {
+        this.visitedLinksSerializeListener = visitedLinksSerializeListener;
+    }
+
+    public void onSaveDownloadStateClick(ActionEvent actionEvent) {
+        downloadingPane.setVisible(false);
+        settingsPane.setVisible(false);
+        serializationPane.setVisible(true);
+    }
+
+    public void onClearMessagesClick(ActionEvent actionEvent) {
+        messages = "";
+        messagesTextArea.setText(messages);
     }
 }

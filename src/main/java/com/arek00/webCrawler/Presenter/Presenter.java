@@ -24,6 +24,8 @@ public class Presenter {
         view.setOnStartDownloadingListener(new OnStartDownloading());
         view.setOnStopDownloadingListener(new OnStopDownloading());
         view.setDomainsList(model.getDomains());
+        view.setQueueSerializeListener(new SaveQueueListener());
+        view.setVisitedLinksSerializeListener(new SaveVisitedLinksListener());
 
         model.setMessageListener(new MessageListener());
         model.setOnStartDownloadListener(view.getOnStartDownloadingListener());
@@ -89,6 +91,31 @@ public class Presenter {
                     view.setDownloadStatistics(model.getDownloadingStatistics());
                 }
             });
+        }
+    }
+
+    class SaveQueueListener implements IListener {
+
+        public void inform() {
+            try {
+                model.serializeQueue(view.getQueueSerializePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                view.showError("Problem with serialize queue: " + e.getMessage());
+            }
+        }
+    }
+
+
+    class SaveVisitedLinksListener implements IListener {
+
+        public void inform() {
+            try {
+                model.serializeVisitedLinks(view.getVisitedLinksSerializePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                view.showError("Problem with serialize visited links: " + e.getMessage());
+            }
         }
     }
 

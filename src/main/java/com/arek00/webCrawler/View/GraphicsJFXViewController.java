@@ -60,12 +60,29 @@ public class GraphicsJFXViewController implements IView {
         return viewController.queueFilePathField.getText();
     }
 
+    public String getQueueSerializePath() {
+        return viewController.queueSavePathTextField.getText();
+    }
+
+    public void setQueueSerializeListener(IListener listener) {
+        viewController.setSerializeQueueListener(listener);
+    }
+
     public String getDirectoryToDownloadPath() {
         return viewController.articlesDirectoryPathField.getText();
     }
 
     public String getVisitedLinksPath() {
         return viewController.visitedLinksPathField.getText();
+    }
+
+    public String getVisitedLinksSerializePath() {
+        return viewController.visitedLinksSavePathField.getText();
+    }
+
+    public void setVisitedLinksSerializeListener(IListener listener) {
+        viewController.setVisitedLinksSerializeListener(listener);
+
     }
 
     public String getArticlesNumber() {

@@ -19,6 +19,7 @@ import com.arek00.webCrawler.Validators.StringValidator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public class Model {
 
-    private String DOMAINS_RESOURCE;
+    private final String DOMAINS_RESOURCE = "/domains/domains.xml";
     private boolean hardStop = false;
 
 
@@ -52,7 +53,6 @@ public class Model {
     private Thread downloadingThread;
 
     public Model() {
-        setDomainsFilePath();
         serializer = new XMLSerializer();
         linkExtractor = new SimpleLinkExtractor();
         statistic = new DownloadingStatistic();
@@ -65,13 +65,8 @@ public class Model {
         }
     }
 
-    private void setDomainsFilePath() {
-        this.DOMAINS_RESOURCE = getClass().getResource("/domains/domains.xml").getFile();
-        System.out.println(DOMAINS_RESOURCE);
-    }
-
     private DomainsList loadDomainsList() throws Exception {
-        File domainsSerializationFile = new File(DOMAINS_RESOURCE);
+        InputStream domainsSerializationFile = getClass().getResourceAsStream(DOMAINS_RESOURCE);
         return this.serializer.deserialize(DomainsList.class, domainsSerializationFile);
     }
 
@@ -81,10 +76,9 @@ public class Model {
 
         for (DomainLoaderInfo domainInfo : domains) {
 
-            String path = getClass().getResource(domainInfo.getDomainFilePath()).getFile();
+            InputStream file = getClass().getResourceAsStream(domainInfo.getDomainFilePath());
 
-            File domainFile = new File(path);
-            Domain domain = serializer.deserialize(Domain.class, domainFile);
+            Domain domain = serializer.deserialize(Domain.class, file);
             deserializedDomains.add(domain);
         }
 
@@ -95,7 +89,12 @@ public class Model {
 
 
     public void setDomain(Domain domain) {
-        ObjectValidator.nullPointerValidate(domain);
+
+        try {
+            ObjectValidator.nullPointerValidate(domain);
+        } catch (Exception e) {
+            throw new NullPointerException("Please set correct domain.");
+        }
 
         this.domain = domain;
     }
@@ -289,5 +288,17 @@ public class Model {
 
             informOnStopDownloadingListeners();
         }
+    }
+
+    public void serializeQueue(String path) throws Exception {
+        serializeFile(this.queue, path);
+    }
+
+    public void serializeVisitedLinks(String path) throws Exception {
+        serializeFile(register, path);
+    }
+
+    private void serializeFile(Object object, String path) throws Exception {
+        serializer.serialize(object, new File(path));
     }
 }

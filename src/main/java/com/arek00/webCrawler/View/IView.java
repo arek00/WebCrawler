@@ -20,9 +20,17 @@ public interface IView {
 
     public String getQueuePath();
 
+    public String getQueueSerializePath();
+
+    public void setQueueSerializeListener(IListener listener);
+
     public String getDirectoryToDownloadPath();
 
     public String getVisitedLinksPath();
+
+    public String getVisitedLinksSerializePath();
+
+    public void setVisitedLinksSerializeListener(IListener listener);
 
     public String getArticlesNumber();
 
