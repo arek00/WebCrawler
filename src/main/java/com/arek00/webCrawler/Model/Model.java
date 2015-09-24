@@ -167,18 +167,21 @@ public class Model {
         IArticleExtractor articlesExtractor = this.domain.getArticleExtractor();
 
         if (articlesExtractor.isArticle(pageUrl)) {
-
             message("Downloading: " + pageUrl);
-
             IArticle article = articlesExtractor.getArticle(pageUrl);
-            String hashFileName = createArticleFileName(article);
-
-            String path = articlesDirectory + "\\" + hashFileName + ".xml";
-            File fileToSave = new File(path);
-            serializer.serialize(article, fileToSave);
-            statistic.setDownloadedFiles(statistic.getDownloadedFiles() + 1);
-            message("Saved " + path + " file.");
+            saveToFile(article);
         }
+    }
+
+    private void saveToFile(IArticle article) throws Exception {
+        String hashFileName = createArticleFileName(article);
+
+        String separator = File.separator;
+        String path = articlesDirectory + separator + hashFileName + ".xml";
+        File fileToSave = new File(path);
+        serializer.serialize(article, fileToSave);
+        statistic.setDownloadedFiles(statistic.getDownloadedFiles() + 1);
+        message("Saved " + path + " file.");
     }
 
     private String createArticleFileName(IArticle article) {
