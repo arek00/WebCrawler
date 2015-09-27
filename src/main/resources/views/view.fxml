@@ -74,8 +74,8 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <TextField fx:id="queueSavePathTextField" layoutX="20.0" layoutY="105.0" prefHeight="25.0" prefWidth="214.0" />
-                <TextField fx:id="visitedLinksSavePathField" layoutX="20.0" layoutY="175.0" prefHeight="25.0" prefWidth="214.0" />
+                <TextField fx:id="queueSavePathTextField" editable="false" layoutX="20.0" layoutY="105.0" prefHeight="25.0" prefWidth="214.0" />
+                <TextField fx:id="visitedLinksSavePathField" editable="false" layoutX="20.0" layoutY="175.0" prefHeight="25.0" prefWidth="214.0" />
                 <Button fx:id="queueSaveButton" layoutX="265.0" layoutY="105.0" mnemonicParsing="false" onAction="#onSaveQueueClick" text="Choose file" />
                 <Button fx:id="visitedLinksSaveButton" layoutX="265.0" layoutY="175.0" mnemonicParsing="false" onAction="#onSaveVisitedLinksClick" text="Choose file" />
                 <Label layoutX="20.0" layoutY="79.0" text="Queue file" />

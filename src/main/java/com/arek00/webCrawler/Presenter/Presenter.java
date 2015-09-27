@@ -1,6 +1,5 @@
 package com.arek00.webCrawler.Presenter;
 
-import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Model.Model;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
@@ -67,7 +66,7 @@ public class Presenter {
     class OnStopDownloading implements IListener {
 
         public void inform() {
-            model.stopDownlaoding();
+            model.stopDownloading();
         }
     }
 

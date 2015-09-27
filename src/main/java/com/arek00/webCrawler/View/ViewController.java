@@ -52,7 +52,6 @@ public class ViewController {
     private FileChooser fileChooser;
     private DirectoryChooser directoryChooser;
     private Window userWindow;
-    private String messages = "";
     private IListener serializeQueueListener;
     private IListener visitedLinksSerializeListener;
 
@@ -69,13 +68,7 @@ public class ViewController {
     }
 
     public void setMessage(String message) {
-        if (this.messages.isEmpty()) {
-            this.messages += message;
-        } else {
-            this.messages += '\n' + message;
-        }
-
-        messagesTextArea.setText(this.messages);
+        messagesTextArea.appendText(message + '\n');
     }
 
     public void setOnStartDownloading(EventHandler<ActionEvent> action) {
@@ -187,7 +180,6 @@ public class ViewController {
     }
 
     public void onClearMessagesClick(ActionEvent actionEvent) {
-        messages = "";
-        messagesTextArea.setText(messages);
+        messagesTextArea.clear();
     }
 }

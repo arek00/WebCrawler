@@ -155,7 +155,7 @@ public class Model {
 
     }
 
-    public void stopDownlaoding() {
+    public void stopDownloading() {
         hardStop = true;
     }
 
