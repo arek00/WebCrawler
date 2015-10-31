@@ -10,6 +10,8 @@ public interface IArticleExtractor {
 
     public IArticle getArticle(String url) throws IOException;
 
+    public IArticle getArticle() throws IOException;
+
     public void setTitleExtractor(IContentExtractor titleExtractor);
 
     public void setContentExtractor(IContentExtractor contentExtractor);

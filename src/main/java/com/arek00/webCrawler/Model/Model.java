@@ -30,7 +30,6 @@ public class Model {
     private final String DOMAINS_RESOURCE = "/domains/domains.xml";
     private boolean hardStop = false;
 
-
     private DownloadingStatistic statistic;
     private String articlesDirectory;
     private IQueue queue;
@@ -168,7 +167,7 @@ public class Model {
 
         if (articlesExtractor.isArticle(pageUrl)) {
             message("Downloading: " + pageUrl);
-            IArticle article = articlesExtractor.getArticle(pageUrl);
+            IArticle article = articlesExtractor.getArticle();
             saveToFile(article);
         }
     }

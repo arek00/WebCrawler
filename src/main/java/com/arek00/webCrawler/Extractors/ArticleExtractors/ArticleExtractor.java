@@ -19,6 +19,9 @@ public class ArticleExtractor implements IArticleExtractor {
     @Element private IContentExtractor contentExtractor;
     @Element private IContentExtractor titleExtractor;
 
+    private String sourceURL;
+    private String htmlCode;
+
     public ArticleExtractor(IContentExtractor contentExtractor, IContentExtractor titleExtractor) {
         ObjectValidator.nullPointerValidate(contentExtractor, titleExtractor);
 
@@ -31,24 +34,53 @@ public class ArticleExtractor implements IArticleExtractor {
         ObjectValidator.nullPointerValidate(url);
 
         String htmlCode = downloader.downloadURL(url);
+        ObjectValidator.nullPointerValidate(htmlCode);
+
+        this.htmlCode = htmlCode;
+        this.sourceURL = url;
+
         return contentExtractor.containsContent(htmlCode);
     }
 
+    /**
+     * Download htmlCode from given url and get
+     * Article instance that contains extracted
+     * title and content, from tags matched set in extractor.
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     */
     public IArticle getArticle(String url) throws IOException {
         ObjectValidator.nullPointerValidate(url);
 
         String htmlCode = downloader.downloadURL(url);
+        ObjectValidator.nullPointerValidate(htmlCode);
 
-        String title = titleExtractor.extractContent(htmlCode);
-        String content = contentExtractor.extractContent(htmlCode);
+        this.htmlCode = htmlCode;
+        this.sourceURL = url;
 
-        return new Article(title, content, url);
+        return getArticle();
+    }
+
+    /**
+     * Unparameter method returns last checked or downloaded article
+     * by instance of this extractor.
+     * Preferred to use after checked if given link contains article.
+     *
+     * @return
+     */
+    public IArticle getArticle() throws IOException {
+
+        String title = titleExtractor.extractContent(this.htmlCode);
+        String content = contentExtractor.extractContent(this.htmlCode);
+
+        return new Article(title, content, this.sourceURL);
     }
 
     /**
      * Constructor to serialization purposes
      */
-
     public ArticleExtractor() {
         downloader = new SimpleDownloader();
     }

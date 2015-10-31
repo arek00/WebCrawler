@@ -1,0 +1,18 @@
+<domain domainName="yahoo.com" mainPage="http://www.yahoo.com">
+    <extractor class="com.arek00.webCrawler.Extractors.ArticleExtractors.ArticleExtractor">
+        <contentExtractor class="com.arek00.webCrawler.Extractors.ContentExtractors.SimpleContentExtractor">
+            <attributes>
+                <element>div</element>
+                <attribute>itemtype</attribute>
+                <attributeValue>http://schema.org/Article</attributeValue>
+            </attributes>
+        </contentExtractor>
+        <titleExtractor class="com.arek00.webCrawler.Extractors.ContentExtractors.SimpleContentExtractor">
+            <attributes>
+                <element>title</element>
+                <attribute></attribute>
+                <attributeValue></attributeValue>
+            </attributes>
+        </titleExtractor>
+    </extractor>
+</domain>

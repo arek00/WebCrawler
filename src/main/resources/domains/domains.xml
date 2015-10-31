@@ -2,5 +2,6 @@
    <domainsList class="java.util.ArrayList">
       <domainLoaderInfo domainFilePath="/domains/extractors/interia.xml" domainName="interia.pl"/>
       <domainLoaderInfo domainFilePath="/domains/extractors/onet.xml" domainName="onet.pl"/>
+      <domainLoaderInfo domainFilePath="/domains/extractors/yahoo.xml" domainName="onet.pl"/>
    </domainsList>
 </domainsList>
