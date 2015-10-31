@@ -20,6 +20,8 @@ public class Presenter {
         this.model = model;
         this.view = view;
         setListeners();
+
+        view.show();
     }
 
     private void setListeners() {

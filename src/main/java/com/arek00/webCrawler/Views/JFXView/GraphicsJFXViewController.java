@@ -49,6 +49,11 @@ public class GraphicsJFXViewController implements IView {
     }
 
 
+    @Override
+    public void show() {
+        viewController.show();
+    }
+
     public Domain getDomain() {
         return viewController.getDomain();
     }

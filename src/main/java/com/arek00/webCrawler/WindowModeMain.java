@@ -34,7 +34,7 @@ public class WindowModeMain extends Application {
         Model model = new Model();
         Presenter presenter = new Presenter(model, view);
 
-        primaryStage.show();
+//        primaryStage.show();
     }
 
     private void setViewController()

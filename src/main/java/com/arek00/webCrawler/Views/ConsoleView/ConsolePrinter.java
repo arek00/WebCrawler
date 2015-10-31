@@ -66,4 +66,20 @@ public class ConsolePrinter {
             counter[0]++;
         });
     }
+
+
+    public void printArgumentsHelp() {
+        String helpText = String
+                .format("--Web Crawler--\n" +
+                                "Arguments help:\n" +
+                                "Mandatory: " + ConsoleArgumentsEnum.SAVE_DIRECTORY.getValue() + " directory to save files\n" +
+                                "Mandatory: " + ConsoleArgumentsEnum.DOMAIN.getValue() + " index of available domain to download from\n" +
+                                "Optional: " + ConsoleArgumentsEnum.MAX_ARTICLES.getValue() + " number of maximum articles to download\n" +
+                                "Default is negative, which means articles downloading is limited by queue\n" +
+                                "Optional: " + ConsoleArgumentsEnum.QUEUE_FILE + " file contains queue history. Queue will be also saved here\n" +
+                                "Optional: " + ConsoleArgumentsEnum.VISITED_LINKS + " file contains visited links history. Visited links will be also saved there"
+                );
+        print(helpText);
+
+    }
 }

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface IView {
 
+    public void show();
+
     public Domain getDomain();
 
     public void setDomainsList(List<Domain> domains);

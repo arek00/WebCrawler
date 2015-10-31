@@ -11,9 +11,15 @@ import com.arek00.webCrawler.Views.IView;
 public class ConsoleModeMain {
 
     public static void main(String args[]) {
-        Model model = new Model();
-        ConsoleView view = new ConsoleView();
+        ConsoleView view;
 
+        if (args.length == 0) {
+            view = new ConsoleView();
+        } else {
+            view = new ConsoleView(args);
+        }
+
+        Model model = new Model();
         Presenter presenter = new Presenter(model, view);
         view.show();
     }

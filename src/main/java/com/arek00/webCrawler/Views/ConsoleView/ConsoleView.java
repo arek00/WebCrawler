@@ -37,7 +37,6 @@ public class ConsoleView implements IView {
     public ConsoleView(String[] args) {
 
 
-
     }
 
 

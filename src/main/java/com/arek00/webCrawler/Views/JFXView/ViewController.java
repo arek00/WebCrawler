@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
@@ -51,7 +52,7 @@ public class ViewController {
     private EventHandler<ActionEvent> onStartDownloadingHandler;
     private FileChooser fileChooser;
     private DirectoryChooser directoryChooser;
-    private Window userWindow;
+    private Stage userWindow;
     private IListener serializeQueueListener;
     private IListener visitedLinksSerializeListener;
 
@@ -98,11 +99,15 @@ public class ViewController {
         visitedLinksPathField.setText(directory.getAbsolutePath());
     }
 
-    public void setUserWindow(Window window) {
+    public void setUserWindow(Stage window) {
         this.userWindow = window;
 
         this.fileChooser = new FileChooser();
         this.directoryChooser = new DirectoryChooser();
+    }
+
+    public void show() {
+        userWindow.show();
     }
 
     public void bindVisitedLinksNumber(StringProperty property) {
