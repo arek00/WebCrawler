@@ -6,10 +6,12 @@ public enum Options {
 
     UNKNOWN(-1),
     START_DOWNLOAD_OPTION(0),
-    SET_DOWNLOAD_DIRECTORY(1),
-    SET_QUEUE(2),
-    SET_VISITED_LINKS(3),
-    EXIT_OPTION(4);
+    SET_DOMAIN(1),
+    SET_DOWNLOAD_DIRECTORY(2),
+    SET_ARTICLES_NUMBER(3),
+    SET_QUEUE(4),
+    SET_VISITED_LINKS(5),
+    EXIT_OPTION(6);
 
     private final int value;
 

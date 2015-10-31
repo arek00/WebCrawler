@@ -5,7 +5,10 @@ public class ConsoleMessages {
 
     public static final String WELCOME_MESSAGE = "--WEBCRAWLER--";
     public static final String MENU_MESSAGE = "Type number to get concrete action";
+
     public static final String START_CRAWLING_MENU_OPTION_MESSAGE = "Start downloading";
+    public static final String SET_DOMAIN_OPTION_MESSAGE = "Set domain to download";
+    public static final String ARTICLES_NUMBER_OPTION_MESSAGE = "Set number of articles to download";
     public static final String SET_DIRECTORY_OPTION_MESSAGE = "Choose directory to download";
     public static final String LOAD_QUEUE_OPTION_MESSAGE = "Set queue file";
     public static final String LOAD_HISTORY_OPTION_MESSAGE = "Set file contains visited links story";
@@ -15,6 +18,8 @@ public class ConsoleMessages {
     public static final String ON_START_DOWNLOAD_MESSAGE = "--Starting download--";
     public static final String DOWNLOAD_SOURCE_MESSAGE = "Download from: ";
     public static final String ARTICLES_NUMBER_MESSAGE = "Articles to download: ";
+    public static final String ARTICLES_INFINITE_NUMBER_MESSAGE = "Set negative number to download number of articles limited only by queue";
+    public static final String CURRENT_ARTICLES_NUMBER_MESSAGE = "Current articles number set: ";
 
 
     public static final String STATISTIC_MESSAGE = "Statistics: ";

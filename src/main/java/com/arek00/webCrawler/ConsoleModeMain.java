@@ -1,4 +1,4 @@
-package com.arek00.webCrawler.Writers;
+package com.arek00.webCrawler;
 
 import com.arek00.webCrawler.Model.Model;
 import com.arek00.webCrawler.Presenter.Presenter;

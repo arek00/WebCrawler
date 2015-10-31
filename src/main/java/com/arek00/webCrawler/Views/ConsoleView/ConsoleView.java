@@ -36,6 +36,8 @@ public class ConsoleView implements IView {
 
     public ConsoleView(String[] args) {
 
+
+
     }
 
 
@@ -163,6 +165,7 @@ public class ConsoleView implements IView {
         private void mainMenuAction(String action) {
             Options option = Options.getOptionByValue(-1);
 
+
             try {
                 option = Options.getOptionByValue(Integer.parseInt(action));
             } catch (NumberFormatException exception) {
@@ -185,6 +188,12 @@ public class ConsoleView implements IView {
                 case START_DOWNLOAD_OPTION:
                     startDownloadMenu();
                     break;
+                case SET_DOMAIN:
+                    setDomain();
+                    break;
+                case SET_ARTICLES_NUMBER:
+                    setArticlesNumber();
+                    break;
                 case SET_DOWNLOAD_DIRECTORY:
                     setDownloadPathMenu();
                     break;
@@ -205,7 +214,27 @@ public class ConsoleView implements IView {
         }
 
         private void startDownloadMenu() {
-            onStartDownloadingListener.inform();
+            try {
+                onStartDownloadingListener.inform();
+            } catch (IllegalArgumentException exception) {
+                mainMenu();
+            }
+        }
+
+        private void setDomain() {
+            printer.print(ConsoleMessages.SET_DOMAIN_OPTION_MESSAGE);
+            printer.printDomains(domainsList);
+            String action = input.getAction();
+
+            try {
+                int index = Integer.parseInt(action);
+                domainIndex = index;
+            } catch (NumberFormatException exception) {
+                showError(ConsoleMessages.INVALID_OPTION_NUMBER_MESSAGE);
+            }
+            finally {
+                mainMenu();
+            }
         }
 
         private void setDownloadPathMenu() {
@@ -217,6 +246,24 @@ public class ConsoleView implements IView {
             downloadPath = action;
             mainMenu();
         }
+
+        private void setArticlesNumber() {
+            printer.print(ConsoleMessages.ARTICLES_NUMBER_OPTION_MESSAGE);
+            printer.print(ConsoleMessages.ARTICLES_INFINITE_NUMBER_MESSAGE);
+            printer.print(ConsoleMessages.CURRENT_ARTICLES_NUMBER_MESSAGE + maxArticles);
+
+            String action = input.getAction();
+
+            try {
+                int articlesNumber = Integer.parseInt(action);
+                maxArticles = articlesNumber;
+            } catch (NumberFormatException exception) {
+                showError(ConsoleMessages.INVALID_OPTION_NUMBER_MESSAGE);
+            } finally {
+                mainMenu();
+            }
+        }
+
 
         private void setQueueMenu() {
             printer.print(ConsoleMessages.SET_QUEUE_FILE_MESSAGE);

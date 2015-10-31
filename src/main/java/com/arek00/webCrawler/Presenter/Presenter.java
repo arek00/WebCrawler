@@ -87,9 +87,6 @@ public class Presenter {
         }
 
         public void inform() {
-
-
-
             view.setDownloadStatistics(model.getDownloadingStatistics());
         }
     }

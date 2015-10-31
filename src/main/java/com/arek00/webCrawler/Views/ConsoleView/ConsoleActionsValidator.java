@@ -7,11 +7,11 @@ public class ConsoleActionsValidator {
     public static void validateDirectoryPath(String path) {
         File file = new File(path);
 
-        if (! file.isDirectory()) {
+        if (!file.isDirectory()) {
             throw new IllegalArgumentException("Path " + path + " is a file.");
         }
 
-        if(! file.canWrite()) {
+        if (!file.canWrite()) {
             throw new IllegalArgumentException("Path is invalid or you don't have permissions to save in this path");
         }
     }
@@ -23,10 +23,8 @@ public class ConsoleActionsValidator {
             throw new IllegalArgumentException("Path " + path + " is a directory.");
         }
 
-        if(! file.exists()) {
+        if (!file.exists()) {
             throw new IllegalArgumentException("File doesn't exist.");
         }
     }
-
-
 }
