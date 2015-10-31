@@ -5,6 +5,7 @@ import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
 import com.arek00.webCrawler.Views.IView;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -132,9 +133,11 @@ public class GraphicsJFXViewController implements IView {
         String downloadedLinks = Integer.toString(statistics.getDownloadedFiles());
         String linksInQueue = Integer.toString(statistics.getQueueLength());
 
-        visitedLinksProperty.set(visitedLinks);
-        downloadedLinksProperty.set(downloadedLinks);
-        linksInQueueProperty.set(linksInQueue);
+        Platform.runLater(() -> {
+            visitedLinksProperty.set(visitedLinks);
+            downloadedLinksProperty.set(downloadedLinks);
+            linksInQueueProperty.set(linksInQueue);
+        });
     }
 
 

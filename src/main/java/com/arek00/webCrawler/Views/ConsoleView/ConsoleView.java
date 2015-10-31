@@ -18,6 +18,11 @@ public class ConsoleView implements IView {
     private String downloadPath = "";
     private int maxArticles = -1;
 
+
+    private IListener onStartDownloadingListener;
+    private IListener onStopDownloadingListener;
+    private IListener onPauseDownloadingListener;
+
     private ConsolePrinter printer = new ConsolePrinter();
     private ConsoleMenu menu;
 
@@ -103,10 +108,12 @@ public class ConsoleView implements IView {
 
     @Override
     public void setOnStartDownloadingListener(IListener listener) {
+        this.onStartDownloadingListener = listener;
     }
 
     @Override
     public void setOnStopDownloadingListener(IListener listener) {
+        this.onStopDownloadingListener = listener;
     }
 
     @Override
@@ -187,6 +194,9 @@ public class ConsoleView implements IView {
                 case SET_VISITED_LINKS:
                     setVisitedLinksMenu();
                     break;
+                case EXIT_OPTION:
+                    exit();
+                    break;
                 default:
                     showError(ConsoleMessages.INVALID_OPTION_NUMBER_MESSAGE);
                     mainMenu();
@@ -195,7 +205,7 @@ public class ConsoleView implements IView {
         }
 
         private void startDownloadMenu() {
-
+            onStartDownloadingListener.inform();
         }
 
         private void setDownloadPathMenu() {
@@ -205,6 +215,7 @@ public class ConsoleView implements IView {
             ConsoleActionsValidator.validateDirectoryPath(action);
 
             downloadPath = action;
+            mainMenu();
         }
 
         private void setQueueMenu() {
@@ -214,6 +225,7 @@ public class ConsoleView implements IView {
 
             ConsoleActionsValidator.validateFilePath(action);
             queuePath = action;
+            mainMenu();
         }
 
         private void setVisitedLinksMenu() {
@@ -223,6 +235,11 @@ public class ConsoleView implements IView {
 
             ConsoleActionsValidator.validateFilePath(action);
             visitedLinksPath = action;
+            mainMenu();
+        }
+
+        private void exit() {
+            printer.print(ConsoleMessages.EXIT_OPTION_MESSAGE);
         }
     }
 

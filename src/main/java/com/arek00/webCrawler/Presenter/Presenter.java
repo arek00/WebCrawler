@@ -88,11 +88,9 @@ public class Presenter {
 
         public void inform() {
 
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    view.setDownloadStatistics(model.getDownloadingStatistics());
-                }
-            });
+
+
+            view.setDownloadStatistics(model.getDownloadingStatistics());
         }
     }
 

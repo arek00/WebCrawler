@@ -28,7 +28,10 @@ public class ConsolePrinter {
     public void printOnStartDownload(String source, int articlesNumber) {
         print(ConsoleMessages.ON_START_DOWNLOAD_MESSAGE);
         print(ConsoleMessages.DOWNLOAD_SOURCE_MESSAGE + source);
-        print(ConsoleMessages.ARTICLES_NUMBER_MESSAGE + articlesNumber);
+
+        String articlesNumberString  = (articlesNumber > 0) ? Integer.toString(articlesNumber) : "infinite";
+
+        print(ConsoleMessages.ARTICLES_NUMBER_MESSAGE + articlesNumberString);
         printLine();
     }
 
