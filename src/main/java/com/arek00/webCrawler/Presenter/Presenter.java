@@ -3,7 +3,7 @@ package com.arek00.webCrawler.Presenter;
 import com.arek00.webCrawler.Model.Model;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
-import com.arek00.webCrawler.View.IView;
+import com.arek00.webCrawler.Views.IView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -19,7 +19,10 @@ public class Presenter {
 
         this.model = model;
         this.view = view;
+        setListeners();
+    }
 
+    private void setListeners() {
         view.setOnStartDownloadingListener(new OnStartDownloading());
         view.setOnStopDownloadingListener(new OnStopDownloading());
         view.setDomainsList(model.getDomains());

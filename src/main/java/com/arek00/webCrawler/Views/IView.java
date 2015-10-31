@@ -1,12 +1,9 @@
-package com.arek00.webCrawler.View;
+package com.arek00.webCrawler.Views;
 
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import java.util.List;
 

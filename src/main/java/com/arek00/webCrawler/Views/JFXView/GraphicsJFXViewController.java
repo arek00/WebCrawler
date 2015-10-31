@@ -1,9 +1,10 @@
-package com.arek00.webCrawler.View;
+package com.arek00.webCrawler.Views.JFXView;
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
+import com.arek00.webCrawler.Views.IView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -99,7 +100,6 @@ public class GraphicsJFXViewController implements IView {
 
     public void setOnStartDownloadingListener(IListener listener) {
         ObjectValidator.nullPointerValidate(listener);
-
         viewController.setOnStartDownloading(new ButtonAction(listener));
     }
 

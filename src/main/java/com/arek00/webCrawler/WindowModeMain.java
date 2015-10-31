@@ -2,9 +2,9 @@ package com.arek00.webCrawler;
 
 import com.arek00.webCrawler.Model.Model;
 import com.arek00.webCrawler.Presenter.Presenter;
-import com.arek00.webCrawler.View.GraphicsJFXViewController;
-import com.arek00.webCrawler.View.IView;
-import com.arek00.webCrawler.View.ViewController;
+import com.arek00.webCrawler.Views.JFXView.GraphicsJFXViewController;
+import com.arek00.webCrawler.Views.IView;
+import com.arek00.webCrawler.Views.JFXView.ViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package com.arek00.webCrawler.View;
+package com.arek00.webCrawler.Views.JFXView;
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Observers.IListener;
