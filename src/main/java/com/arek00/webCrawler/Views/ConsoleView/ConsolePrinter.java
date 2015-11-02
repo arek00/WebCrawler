@@ -3,6 +3,7 @@ package com.arek00.webCrawler.Views.ConsoleView;
 
 import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Model.DownloadingStatistic;
+import com.arek00.webCrawler.Views.ConsoleView.Arguments.ConsoleParameter;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class ConsolePrinter {
 
         String[] options = new String[]{
                 ConsoleMessages.START_CRAWLING_MENU_OPTION_MESSAGE,
+                ConsoleMessages.SET_DOMAIN_OPTION_MESSAGE,
                 ConsoleMessages.SET_DIRECTORY_OPTION_MESSAGE,
                 ConsoleMessages.ARTICLES_NUMBER_OPTION_MESSAGE,
                 ConsoleMessages.LOAD_QUEUE_OPTION_MESSAGE,
@@ -68,18 +70,19 @@ public class ConsolePrinter {
     }
 
 
-    public void printArgumentsHelp() {
+    public void printArgumentsHelp(List<Domain> domains) {
         String helpText = String
                 .format("--Web Crawler--\n" +
                                 "Arguments help:\n" +
-                                "Mandatory: " + ConsoleArgumentsEnum.SAVE_DIRECTORY.getValue() + " directory to save files\n" +
-                                "Mandatory: " + ConsoleArgumentsEnum.DOMAIN.getValue() + " index of available domain to download from\n" +
-                                "Optional: " + ConsoleArgumentsEnum.MAX_ARTICLES.getValue() + " number of maximum articles to download\n" +
+                                "Mandatory: " + ConsoleParameter.SAVE_DIRECTORY.getValue() + " directory to save files\n" +
+                                "Mandatory: " + ConsoleParameter.DOMAIN.getValue() + " index of available domain to download from\n" +
+                                "Optional: " + ConsoleParameter.MAX_ARTICLES.getValue() + " number of maximum articles to download\n" +
                                 "Default is negative, which means articles downloading is limited by queue\n" +
-                                "Optional: " + ConsoleArgumentsEnum.QUEUE_FILE + " file contains queue history. Queue will be also saved here\n" +
-                                "Optional: " + ConsoleArgumentsEnum.VISITED_LINKS + " file contains visited links history. Visited links will be also saved there"
+                                "Optional: " + ConsoleParameter.QUEUE_FILE + " file contains queue history. Queue will be also saved here\n" +
+                                "Optional: " + ConsoleParameter.VISITED_LINKS + " file contains visited links history. Visited links will be also saved there\n\n" +
+                                "Available domains: \n"
                 );
         print(helpText);
-
+        printDomains(domains);
     }
 }

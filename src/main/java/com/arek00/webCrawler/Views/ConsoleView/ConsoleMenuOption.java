@@ -1,8 +1,6 @@
 package com.arek00.webCrawler.Views.ConsoleView;
 
-import java.util.Arrays;
-
-public enum Options {
+public enum ConsoleMenuOption {
 
     UNKNOWN(-1),
     START_DOWNLOAD_OPTION(0),
@@ -15,12 +13,12 @@ public enum Options {
 
     private final int value;
 
-    private Options(int value) {
+    private ConsoleMenuOption(int value) {
         this.value = value;
     }
 
-    public static Options getOptionByValue(int value) {
-        for (Options option : values()) {
+    public static ConsoleMenuOption getOptionByValue(int value) {
+        for (ConsoleMenuOption option : values()) {
             if (option.value == value) {
                 return option;
             }

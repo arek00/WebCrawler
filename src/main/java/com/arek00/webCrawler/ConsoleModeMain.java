@@ -21,7 +21,6 @@ public class ConsoleModeMain {
 
         Model model = new Model();
         Presenter presenter = new Presenter(model, view);
-        view.show();
     }
 
 }

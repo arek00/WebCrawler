@@ -4,12 +4,18 @@ import com.arek00.webCrawler.Entities.Domains.Domain;
 import com.arek00.webCrawler.Model.DownloadingStatistic;
 import com.arek00.webCrawler.Observers.IListener;
 import com.arek00.webCrawler.Validators.ObjectValidator;
+import com.arek00.webCrawler.Views.ConsoleView.Arguments.ConsoleArguments;
+import com.arek00.webCrawler.Views.ConsoleView.Arguments.ConsoleArgumentsExtractor;
+import com.arek00.webCrawler.Views.ConsoleView.Arguments.IllegalConsoleArgumentException;
 import com.arek00.webCrawler.Views.IView;
 
 import java.util.List;
 
 
 public class ConsoleView implements IView {
+
+    private String[] arguments;
+    private ConsoleArgumentsExtractor extractor;
 
     private List<Domain> domainsList;
     private int domainIndex = 0;
@@ -18,6 +24,7 @@ public class ConsoleView implements IView {
     private String downloadPath = "";
     private int maxArticles = -1;
 
+    private boolean isScriptMode = false;
 
     private IListener onStartDownloadingListener;
     private IListener onStopDownloadingListener;
@@ -30,13 +37,33 @@ public class ConsoleView implements IView {
         menu = new ConsoleMenu();
     }
 
-    public void show() {
-        menu.mainMenu();
+    public ConsoleView(String[] args) {
+        this.arguments = args;
+        this.extractor = new ConsoleArgumentsExtractor();
+        isScriptMode = true;
     }
 
-    public ConsoleView(String[] args) {
+    public void show() {
+        if (isScriptMode) {
 
+            try {
+                setArguments(ConsoleArgumentsExtractor.extract(this.arguments));
+                onStartDownloadingListener.inform();
+            } catch (IllegalConsoleArgumentException e) {
+                printer.printArgumentsHelp(domainsList);
+            }
 
+        } else {
+            menu.mainMenu();
+        }
+    }
+
+    private void setArguments(ConsoleArguments arguments) {
+        this.domainIndex = arguments.getDomainIndex();
+        this.maxArticles = arguments.getMaxArticles();
+        this.queuePath = arguments.getQueuePath();
+        this.downloadPath = arguments.getDownloadPath();
+        this.visitedLinksPath = arguments.getVisitedLinksPath();
     }
 
 
@@ -132,7 +159,9 @@ public class ConsoleView implements IView {
     public IListener getOnStopDownloadingListener() {
         return () -> {
             printer.print(ConsoleMessages.STOP_DOWNLOAD_MESSAGE);
-            menu.mainMenu();
+            if (isScriptMode) {
+                menu.mainMenu();
+            }
         };
     }
 
@@ -162,18 +191,17 @@ public class ConsoleView implements IView {
         }
 
         private void mainMenuAction(String action) {
-            Options option = Options.getOptionByValue(-1);
-
+            ConsoleMenuOption option = ConsoleMenuOption.getOptionByValue(-1);
 
             try {
-                option = Options.getOptionByValue(Integer.parseInt(action));
+                option = ConsoleMenuOption.getOptionByValue(Integer.parseInt(action));
             } catch (NumberFormatException exception) {
                 showError(ConsoleMessages.INVALID_OPTION_TYPE_MESSAGE);
                 mainMenu();
                 return;
             }
 
-            if (option == Options.UNKNOWN) {
+            if (option == ConsoleMenuOption.UNKNOWN) {
                 showError(ConsoleMessages.INVALID_OPTION_NUMBER_MESSAGE);
                 mainMenu();
                 return;
@@ -182,7 +210,7 @@ public class ConsoleView implements IView {
             doMainMenuAction(option);
         }
 
-        private void doMainMenuAction(Options option) {
+        private void doMainMenuAction(ConsoleMenuOption option) {
             switch (option) {
                 case START_DOWNLOAD_OPTION:
                     startDownloadMenu();
@@ -230,8 +258,7 @@ public class ConsoleView implements IView {
                 domainIndex = index;
             } catch (NumberFormatException exception) {
                 showError(ConsoleMessages.INVALID_OPTION_NUMBER_MESSAGE);
-            }
-            finally {
+            } finally {
                 mainMenu();
             }
         }
@@ -262,7 +289,6 @@ public class ConsoleView implements IView {
                 mainMenu();
             }
         }
-
 
         private void setQueueMenu() {
             printer.print(ConsoleMessages.SET_QUEUE_FILE_MESSAGE);
